@@ -1,4 +1,5 @@
 import os
+import time
 import chromadb
 import google.generativeai as genai
 from dotenv import load_dotenv
@@ -9,7 +10,7 @@ genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 EMBEDDING_MODEL = "models/gemini-embedding-001"
 COLLECTION_NAME = "company_docs"
 
-# Persistent client — data survives across runs, stored in ./chroma_db folder
+# Persistent client - data survives across runs, stored in ./chroma_db folder
 client = chromadb.PersistentClient(path="./chroma_db")
 
 
@@ -22,18 +23,49 @@ def embed_text(text: str, task_type: str = "retrieval_document"):
     return result["embedding"]
 
 
-def build_store(documents: list):
-    # Rebuild fresh each run so document edits are reflected
+def embed_batch(texts: list, task_type: str = "retrieval_document", batch_size: int = 15):
+    # 15 texts har 12 sec mein = ~75 requests/min, free limit (100/min) ke andar
+    all_embeddings = []
+    for i in range(0, len(texts), batch_size):
+        batch = texts[i:i + batch_size]
+        for attempt in range(4):
+            try:
+                result = genai.embed_content(
+                    model=EMBEDDING_MODEL,
+                    content=batch,
+                    task_type=task_type
+                )
+                all_embeddings.extend(result["embedding"])
+                break
+            except Exception as e:
+                print("embed error, 60 sec wait, retry", attempt + 1, "|", str(e)[:80])
+                time.sleep(60)
+        else:
+            raise RuntimeError("embedding failed after 4 retries")
+        print(f"embedded {len(all_embeddings)}/{len(texts)}")
+        time.sleep(12)
+    return all_embeddings
+
+
+def build_store(documents: list, collection_name: str = COLLECTION_NAME):
+    # Rebuild fresh each run so edits are reflected
     try:
-        client.delete_collection(COLLECTION_NAME)
+        client.delete_collection(collection_name)
     except Exception:
         pass
-    collection = client.create_collection(COLLECTION_NAME)
+    collection = client.create_collection(collection_name)
 
     ids = [d["id"] for d in documents]
     contents = [d["content"] for d in documents]
-    metadatas = [{"role": d["role"]} for d in documents]
-    embeddings = [embed_text(d["content"]) for d in documents]
+    metadatas = [
+        {
+            "role": d["role"],
+            "doc_id": d.get("doc_id", d["id"]),
+            "chunk_index": d.get("chunk_index", 0),
+        }
+        for d in documents
+    ]
+    embeddings = embed_batch(contents)
 
     collection.add(
         ids=ids,
@@ -45,11 +77,11 @@ def build_store(documents: list):
     return collection
 
 
-def search(query: str, user_role: str, top_k: int = 2):
-    collection = client.get_collection(COLLECTION_NAME)
+def search(query: str, user_role: str, top_k: int = 2, collection_name: str = COLLECTION_NAME):
+    collection = client.get_collection(collection_name)
     query_embedding = embed_text(query, task_type="retrieval_query")
 
-    # ChromaDB filters by role metadata BEFORE similarity ranking —
+    # ChromaDB filters by role metadata BEFORE similarity ranking -
     # restricted documents are never even considered
     results = collection.query(
         query_embeddings=[query_embedding],
@@ -64,6 +96,7 @@ def search(query: str, user_role: str, top_k: int = 2):
     for i in range(len(ids)):
         docs.append({
             "id": ids[i],
+            "doc_id": metadatas[i].get("doc_id", ids[i]),
             "content": contents[i],
             "role": metadatas[i]["role"]
         })
