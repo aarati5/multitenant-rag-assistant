@@ -9,7 +9,7 @@ except Exception:
     pass
 
 from src.documents import DOCUMENTS
-from src.vector_store import build_store, search
+from src.vector_store import load_store_from_file, search
 from src.audit import log_access, load_log
 from src.qa_agent import generate_answer
 
@@ -18,7 +18,7 @@ st.set_page_config(page_title="Permission-Aware RAG", page_icon="🔐")
 
 @st.cache_resource
 def init_store():
-    build_store(DOCUMENTS)
+    load_store_from_file()
     return True
 
 
@@ -56,7 +56,7 @@ query = st.text_input("Ask a question", placeholder="e.g. What was the quarterly
 if st.button("Ask") and query.strip():
     # 1. Retrieval + audit: this is the core feature, so show it first
     try:
-        docs = search(query, role, top_k=3)
+        docs = search(query, role, top_k=4, collection_name="company_chunks")
     except Exception as e:
         st.error(f"Search failed (possibly an API rate limit). Please try again shortly.\n\n{e}")
         st.stop()
@@ -76,7 +76,7 @@ if st.button("Ask") and query.strip():
 
     st.subheader("Retrieved documents")
     for d in docs:
-        with st.expander(f"{d['id']}  |  access level: {d['role']}"):
+        with st.expander(f"{d['id']} (from {d['doc_id']})  |  access level: {d['role']}"):
             st.write(d["content"])
 
 with st.expander("Audit log"):

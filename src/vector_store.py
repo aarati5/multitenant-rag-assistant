@@ -101,3 +101,21 @@ def search(query: str, user_role: str, top_k: int = 2, collection_name: str = CO
             "role": metadatas[i]["role"]
         })
     return docs
+
+def load_store_from_file(path: str = "data/chunk_embeddings.json", collection_name: str = "company_chunks"):
+    # Saved embeddings se store banao: koi API call nahi, quota nahi lagta
+    import json
+    try:
+        client.delete_collection(collection_name)
+    except Exception:
+        pass
+    collection = client.create_collection(collection_name)
+    items = json.load(open(path, encoding="utf-8"))
+    collection.add(
+        ids=[x["id"] for x in items],
+        embeddings=[x["embedding"] for x in items],
+        documents=[x["content"] for x in items],
+        metadatas=[x["metadata"] for x in items],
+    )
+    print(f"Loaded {len(items)} chunks from file (no API calls).")
+    return collection
