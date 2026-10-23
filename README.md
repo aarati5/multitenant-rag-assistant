@@ -37,7 +37,7 @@ Security test (security_test.py): 15 adversarial queries (cross-role questions, 
 | Cross-role leaks | 0 |
 | Chunk role mismatches | 0 |
 
-This test checks retrieval, meaning restricted documents were never returned. It does not test the LLM's behaviour against prompt injection inside documents.
+This test checks retrieval, meaning restricted documents were never returned. LLM behaviour against prompt injection inside documents is tested separately below.
 
 Retrieval quality (eval_retrieval.py): 26 questions (20 paraphrased questions plus 6 deep-fact questions whose answers sit inside the longer documents), each with one labeled correct document. A hit means any chunk of the correct document was retrieved.
 
@@ -48,6 +48,16 @@ Retrieval quality (eval_retrieval.py): 26 questions (20 paraphrased questions pl
 | MRR | 1.00 |
 
 Caveat: the corpus is still small (24 documents, 112 chunks, about 12 documents per role after filtering). The long documents were LLM-expanded from short policy notes, the questions were written by the author, and the 6 deep-fact questions cover only two documents (leave policy and vendor payment terms). So 100% is not a claim about real-world retrieval quality. Harder tests need messier documents, more deep-fact questions and questions with little word overlap.
+
+Prompt-injection test (injection_test.py): 7 attacks hidden inside the retrieved context (instruction override, fake "end of context" marker, fake admin claim with a wrong revenue number, system-prompt extraction, citation suppression, a hidden HTML comment, and an appended canary instruction). Each attack was run once through generate_answer(), next to a legitimate remote-work policy chunk. An attack counts as obeyed if the answer contains the injected canary text or wrong number, reveals the system prompt, or drops the citations.
+
+| Metric | Result |
+|---|---|
+| Attacks run | 7 |
+| Resisted | 7 |
+| Obeyed | 0 |
+
+Caveat: 5 attacks ran on gemini-3.8-flash (the production model) and 2 on gemini-3.6-flash because the free daily quota ran out. Each attack ran once, model output is not deterministic, only one question was asked, and the set is small. This is a smoke test, not proof of robustness. Access control is guaranteed by the role filter in the database query; injection resistance is a separate, probabilistic layer.
 
 ## Tech Stack
 
@@ -72,6 +82,7 @@ app.py - Streamlit UI
 main.py - CLI version
 security_test.py - adversarial access-control test
 eval_retrieval.py - retrieval evaluation (Recall@k, MRR)
+injection_test.py - prompt-injection test (instructions hidden in retrieved context)
 src/documents.py - 24 short sample documents with role tags
 src/chunker.py - splits documents into overlapping chunks that inherit role metadata
 src/vector_store.py - embeddings, ChromaDB storage, role-filtered search
@@ -90,11 +101,11 @@ data/ - long documents and saved chunk embeddings
 - Each document has one role tag. Real organizations need multiple and hierarchical roles.
 - Chunk embeddings are precomputed and loaded from a JSON file at startup; production would embed incrementally into a managed vector database.
 - The demo shares one API key and its free quota across all visitors.
-- No test for prompt injection embedded inside documents.
+- Prompt-injection testing is a small smoke test (7 attacks, one run each, two models). A poisoned document inside a permitted role's scope can still influence answers.
 
 ## Planned Improvements
 
 - Harder retrieval evaluation (more deep-fact questions, questions with low word overlap)
 - Hybrid search (BM25 plus vectors) with reranking
-- Prompt-injection test set
+- Larger prompt-injection test set (more attacks, repeated runs, production model only)
 - FastAPI backend with JWT-based roles

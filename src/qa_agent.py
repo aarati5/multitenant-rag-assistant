@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
-def generate_answer(query: str, retrieved_docs: list) -> str:
+def generate_answer(query: str, retrieved_docs: list, model_name: str = "gemini-3.8-flash") -> str:
     if not retrieved_docs:
         return "No accessible documents were found relevant to your query. You may not have permission to view this information."
 
@@ -20,7 +20,7 @@ Rules:
 """
 
     model = genai.GenerativeModel(
-        model_name="gemini-3.8-flash",
+        model_name=model_name,
         system_instruction=system_prompt
     )
 
