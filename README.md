@@ -67,6 +67,7 @@ Caveat: the corpus is still small (24 documents, 112 chunks, about 12 documents 
 
 ## Project Structure
 
+```
 app.py - Streamlit UI
 main.py - CLI version
 security_test.py - adversarial access-control test
@@ -79,6 +80,7 @@ src/qa_agent.py - grounded answer generation
 gen_long_docs.py - expands the short sample documents into 400-600 word documents
 build_chunk_index.py, export_embeddings.py - build the chunked index and save its embeddings
 data/ - long documents and saved chunk embeddings
+```
 
 ## Limitations and Scaling Considerations
 
