@@ -59,12 +59,32 @@ Prompt-injection test (injection_test.py): 7 attacks hidden inside the retrieved
 
 Caveat: 5 attacks ran on gemini-3.8-flash (the production model) and 2 on gemini-3.6-flash because the free daily quota ran out. Each attack ran once, model output is not deterministic, only one question was asked, and the set is small. This is a smoke test, not proof of robustness. Access control is guaranteed by the role filter in the database query; injection resistance is a separate, probabilistic layer.
 
+## API: FastAPI with JWT-based roles
+
+api.py is a FastAPI backend where the role comes from a signed token, never from the request.
+
+- POST /login: username and password (form data) return a JWT (HS256, 30-minute expiry) whose claims carry the username and role.
+- POST /ask: requires a Bearer token. The request body accepts only a query; a body that contains a role field is rejected with 422. The role used for the ChromaDB filter is read from the verified token.
+- GET /me: returns the identity decoded from the token.
+- Passwords are stored as salted PBKDF2-SHA256 hashes. Demo users (hr_user, eng_user, fin_user) get random passwords from create_users.py; the hashes and the demo passwords live in gitignored files under data/.
+
+API test (test_api.py): 17 checks against the FastAPI app, with the Gemini answer call stubbed out (retrieval and access control run for real).
+
+| Check group | Checks | Passed |
+|---|---|---|
+| Login (wrong password, unknown user, 3 valid logins) | 5 | 5 |
+| Token attacks on /ask (no token, garbage token, tampered signature, wrong secret, expired, alg=none, unknown user, role=admin, plus a role field in the body) | 9 | 9 |
+| Access control through the API (3 users x 5 queries, 60 chunks returned, no cross-role chunk) | 3 | 3 |
+
+Caveat: the LLM call is stubbed in this test, so it covers authentication and retrieval, not answer generation. The expired, unknown-user and role=admin tokens are signed with the real secret on purpose, to test the server-side claim checks. The API runs locally only; the public Streamlit demo does not use it yet.
+
 ## Tech Stack
 
 - Python
 - Google Gemini API (generation and embeddings)
 - ChromaDB (persistent vector database with metadata filtering)
 - Streamlit (UI, deployed on Streamlit Community Cloud)
+- FastAPI and PyJWT (token-based API, tested with FastAPI's TestClient)
 
 ## Run Locally
 
@@ -74,20 +94,26 @@ Caveat: 5 attacks ran on gemini-3.8-flash (the production model) and 2 on gemini
 4. Load the chunk index from the saved embeddings (no API calls): python -c "from src.vector_store import load_store_from_file; load_store_from_file()"
 5. Run the UI: streamlit run app.py (or the CLI: python main.py)
 6. Run the tests: python security_test.py and python eval_retrieval.py
+7. API (optional): pip install -r requirements-api.txt, add JWT_SECRET (32+ random characters) to .env, run python create_users.py, then python -m uvicorn api:app --port 8000 and open http://127.0.0.1:8000/docs
+8. API tests: python test_api.py (needs the users created in step 7)
 
 ## Project Structure
 
 ```
 app.py - Streamlit UI
 main.py - CLI version
+api.py - FastAPI backend: /login issues a JWT, /ask takes the role from the verified token
+create_users.py - creates demo users (random passwords, hashes only in a gitignored file)
 security_test.py - adversarial access-control test
 eval_retrieval.py - retrieval evaluation (Recall@k, MRR)
 injection_test.py - prompt-injection test (instructions hidden in retrieved context)
+test_api.py - API tests (login, token attacks, access control through the API)
 src/documents.py - 24 short sample documents with role tags
 src/chunker.py - splits documents into overlapping chunks that inherit role metadata
 src/vector_store.py - embeddings, ChromaDB storage, role-filtered search
 src/audit.py - persistent audit log
 src/qa_agent.py - grounded answer generation
+src/auth.py - password hashing and JWT creation and verification
 gen_long_docs.py - expands the short sample documents into 400-600 word documents
 build_chunk_index.py, export_embeddings.py - build the chunked index and save its embeddings
 data/ - long documents and saved chunk embeddings
@@ -95,7 +121,7 @@ data/ - long documents and saved chunk embeddings
 
 ## Limitations and Scaling Considerations
 
-- Roles are self-selected in the demo. Production would derive roles from real authentication (SSO/OAuth or JWT), never from user input.
+- The public Streamlit demo still lets visitors pick a role. The FastAPI backend derives the role from a signed JWT, but it uses one shared HS256 secret, a JSON user file, no token revocation or refresh, no login rate limiting, and it is not deployed publicly. Production would use SSO/OAuth with a real identity provider.
 - The audit log on the public demo is visible to every visitor and is not persistent across restarts.
 - Chunking is fixed-size by words (150 words, 30-word overlap). Semantic or section-aware chunking is not implemented.
 - Each document has one role tag. Real organizations need multiple and hierarchical roles.
@@ -108,4 +134,4 @@ data/ - long documents and saved chunk embeddings
 - Harder retrieval evaluation (more deep-fact questions, questions with low word overlap)
 - Hybrid search (BM25 plus vectors) with reranking
 - Larger prompt-injection test set (more attacks, repeated runs, production model only)
-- FastAPI backend with JWT-based roles
+- Connect the Streamlit UI to the API and deploy the API (HTTPS, login rate limiting, token revocation)

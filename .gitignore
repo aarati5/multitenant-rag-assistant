@@ -5,3 +5,5 @@ __pycache__/
 audit_log.json
 chroma_db/
 .streamlit/secrets.toml
+data/users.json
+data/demo_credentials.json
