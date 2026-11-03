@@ -144,7 +144,7 @@ data/ - long documents and saved chunk embeddings
 ## Limitations and Scaling Considerations
 
 - The public Streamlit demo still lets visitors pick a role. The FastAPI backend derives the role from a signed JWT, but it uses one shared HS256 secret, a JSON user file, no token revocation or refresh, no login rate limiting, and it is not deployed publicly. Production would use SSO/OAuth with a real identity provider.
-- The audit log on the public demo is visible to every visitor and is not persistent across restarts.
+- The public demo shows each visitor only the audit entries of their own browser session. Queries are still written to a server-side audit file that visitors cannot see; that file is not persistent across restarts, and the name a visitor types is logged as typed.
 - Chunking is fixed-size by words (150 words, 30-word overlap). Semantic or section-aware chunking is not implemented.
 - Each document has one role tag. Real organizations need multiple and hierarchical roles.
 - Chunk embeddings are precomputed and loaded from a JSON file at startup; production would embed incrementally into a managed vector database.

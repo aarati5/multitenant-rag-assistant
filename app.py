@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 import streamlit as st
 
 # On Streamlit Cloud, copy the secret into an env var BEFORE importing src modules
@@ -62,6 +63,13 @@ if st.button("Ask") and query.strip():
         st.stop()
 
     log_access(user, role, query, [d["id"] for d in docs])
+    st.session_state.setdefault("my_log", []).append({
+        "time": datetime.now().strftime("%H:%M:%S"),
+        "user": user,
+        "role": role,
+        "query": query,
+        "chunks": ", ".join(d["id"] for d in docs),
+    })
 
     # 2. LLM answer: may fail on the free tier, so handle it separately
     st.subheader("Answer")
@@ -79,9 +87,9 @@ if st.button("Ask") and query.strip():
         with st.expander(f"{d['id']} (from {d['doc_id']})  |  access level: {d['role']}"):
             st.write(d["content"])
 
-with st.expander("Audit log"):
-    logs = load_log()
+with st.expander("Audit log (this session only)"):
+    logs = st.session_state.get("my_log", [])
     if logs:
         st.dataframe(logs[::-1])
     else:
-        st.write("No entries yet.")
+        st.write("No entries yet in this session.")
