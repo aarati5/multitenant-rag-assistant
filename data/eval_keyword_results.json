@@ -1,0 +1,218 @@
+[
+  {
+    "role": "hr",
+    "query": "18 paid leaves casual sick",
+    "doc_id": "doc1",
+    "n": 1,
+    "vec": 1,
+    "bm25": 1,
+    "hyb": 1
+  },
+  {
+    "role": "hr",
+    "query": "performance review June December",
+    "doc_id": "doc2",
+    "n": 2,
+    "vec": 1,
+    "bm25": 1,
+    "hyb": 1
+  },
+  {
+    "role": "hr",
+    "query": "onboarding buddy 30 days",
+    "doc_id": "doc3",
+    "n": 3,
+    "vec": 1,
+    "bm25": 1,
+    "hyb": 1
+  },
+  {
+    "role": "hr",
+    "query": "maternity leave 26 weeks",
+    "doc_id": "doc4",
+    "n": 4,
+    "vec": 1,
+    "bm25": 1,
+    "hyb": 1
+  },
+  {
+    "role": "hr",
+    "query": "referral bonus 500",
+    "doc_id": "doc5",
+    "n": 5,
+    "vec": 1,
+    "bm25": 1,
+    "hyb": 1
+  },
+  {
+    "role": "hr",
+    "query": "notice period 60 days resignation",
+    "doc_id": "doc6",
+    "n": 6,
+    "vec": 1,
+    "bm25": 1,
+    "hyb": 1
+  },
+  {
+    "role": "engineering",
+    "query": "production deployments Tuesday Thursday",
+    "doc_id": "doc7",
+    "n": 7,
+    "vec": 1,
+    "bm25": 1,
+    "hyb": 1
+  },
+  {
+    "role": "engineering",
+    "query": "microservices message queue REST",
+    "doc_id": "doc8",
+    "n": 8,
+    "vec": 1,
+    "bm25": 1,
+    "hyb": 1
+  },
+  {
+    "role": "engineering",
+    "query": "on-call allowance overtime",
+    "doc_id": "doc9",
+    "n": 9,
+    "vec": 1,
+    "bm25": 1,
+    "hyb": 1
+  },
+  {
+    "role": "engineering",
+    "query": "pull request approval test coverage",
+    "doc_id": "doc10",
+    "n": 10,
+    "vec": 1,
+    "bm25": 1,
+    "hyb": 1
+  },
+  {
+    "role": "engineering",
+    "query": "sev-1 acknowledge 15 minutes",
+    "doc_id": "doc11",
+    "n": 11,
+    "vec": 1,
+    "bm25": 1,
+    "hyb": 1
+  },
+  {
+    "role": "engineering",
+    "query": "java spring boot kubernetes aws",
+    "doc_id": "doc12",
+    "n": 12,
+    "vec": 1,
+    "bm25": 1,
+    "hyb": 1
+  },
+  {
+    "role": "finance",
+    "query": "Q3 revenue operating expenses",
+    "doc_id": "doc13",
+    "n": 13,
+    "vec": 1,
+    "bm25": 1,
+    "hyb": 1
+  },
+  {
+    "role": "finance",
+    "query": "travel client meeting expenses reimbursement",
+    "doc_id": "doc14",
+    "n": 14,
+    "vec": 1,
+    "bm25": 1,
+    "hyb": 1
+  },
+  {
+    "role": "finance",
+    "query": "vendor invoice payment terms",
+    "doc_id": "doc15",
+    "n": 15,
+    "vec": 1,
+    "bm25": 1,
+    "hyb": 1
+  },
+  {
+    "role": "finance",
+    "query": "external audit March payroll tax filings",
+    "doc_id": "doc16",
+    "n": 16,
+    "vec": 1,
+    "bm25": 1,
+    "hyb": 1
+  },
+  {
+    "role": "finance",
+    "query": "cash reserve 6 months operating expenses",
+    "doc_id": "doc17",
+    "n": 17,
+    "vec": 1,
+    "bm25": 1,
+    "hyb": 1
+  },
+  {
+    "role": "finance",
+    "query": "salary disbursed last working day provident fund",
+    "doc_id": "doc18",
+    "n": 18,
+    "vec": 1,
+    "bm25": 1,
+    "hyb": 1
+  },
+  {
+    "role": "hr",
+    "query": "floating holidays national holidays",
+    "doc_id": "doc19",
+    "n": 19,
+    "vec": 1,
+    "bm25": 1,
+    "hyb": 1
+  },
+  {
+    "role": "engineering",
+    "query": "code of conduct report workplace concerns",
+    "doc_id": "doc20",
+    "n": 20,
+    "vec": 1,
+    "bm25": 1,
+    "hyb": 1
+  },
+  {
+    "role": "finance",
+    "query": "remote work 2 days per week",
+    "doc_id": "doc21",
+    "n": 21,
+    "vec": 1,
+    "bm25": 1,
+    "hyb": 1
+  },
+  {
+    "role": "hr",
+    "query": "two-factor authentication company-approved devices",
+    "doc_id": "doc22",
+    "n": 22,
+    "vec": 1,
+    "bm25": 1,
+    "hyb": 1
+  },
+  {
+    "role": "engineering",
+    "query": "company mission values transparency ownership",
+    "doc_id": "doc23",
+    "n": 23,
+    "vec": 1,
+    "bm25": 1,
+    "hyb": 1
+  },
+  {
+    "role": "finance",
+    "query": "offices Pune Bangalore",
+    "doc_id": "doc24",
+    "n": 24,
+    "vec": 1,
+    "bm25": 1,
+    "hyb": 1
+  }
+]

@@ -47,7 +47,23 @@ Retrieval quality (eval_retrieval.py): 26 questions (20 paraphrased questions pl
 | Recall@3 | 100% (26/26) |
 | MRR | 1.00 |
 
-Caveat: the corpus is still small (24 documents, 112 chunks, about 12 documents per role after filtering). The long documents were LLM-expanded from short policy notes, the questions were written by the author, and the 6 deep-fact questions cover only two documents (leave policy and vendor payment terms). So 100% is not a claim about real-world retrieval quality. Harder tests need messier documents, more deep-fact questions and questions with little word overlap.
+Caveat: the corpus is still small (24 documents, 112 chunks, about 12 documents per role after filtering). The long documents were LLM-expanded from short policy notes, the questions were written by the author, and the 6 deep-fact questions cover only two documents (leave policy and vendor payment terms). So 100% is not a claim about real-world retrieval quality. A larger evaluation follows below.
+
+Harder retrieval evaluation and hybrid search ablation (eval_retrieval_v2.py, eval_hybrid.py): an LLM wrote 4 questions per document from the body of each document (96 in total, FAQ sections excluded). In a single review pass, done by the author together with an LLM assistant, 6 questions were dropped because their answer could also be found in a second document or the question referred to the document itself. The remaining 90 questions were frozen before any hybrid search was tried. Low overlap means a question shares under 50% of its content words with the best chunk of its correct document (the median is 50%, so this is lower, not zero, keyword overlap).
+
+| Method | Recall@1 | Recall@3 | MRR | Recall@1, low overlap (n=40) |
+|---|---|---|---|---|
+| Vector-only (default) | 94% (85/90) | 100% | 0.97 | 92% (37/40) |
+| BM25-only | 90% (81/90) | 98% (88/90) | 0.94 | 85% (34/40) |
+| Hybrid (BM25 + vectors, RRF) | 94% (85/90) | 100% | 0.97 | 95% (38/40) |
+
+Hybrid search did not improve results. Three questions moved up and three moved down, and Recall@3 was already 100% for vector-only, so there was no room to improve it. Vector-only stays the default retrieval in the app and the API. The five vector-only questions that did not rank first were checked by hand: none of them had an ambiguous label, they were real misses where a neighbouring topic ranked higher.
+
+Keyword-style queries (eval_keyword.py): 24 short queries, one per document (for example "sev-1 acknowledge 15 minutes"), written by an LLM assistant from the original short policy notes before the run. All three methods scored 100% Recall@1, so this set cannot tell them apart: each query contains distinctive words from its document and each role has only about 12 documents.
+
+Access control of the hybrid path (security_test_hybrid.py): the BM25 index is built per role from permitted chunks only, and src/hybrid.py applies a final role check. The 15 adversarial queries for 3 roles were run through BM25 and through hybrid search (45 queries each): 385 BM25 chunks and 225 hybrid chunks checked, 0 cross-role leaks, 0 chunk role mismatches.
+
+Caveat: the questions come from an LLM and the documents were LLM-expanded from short notes, so both share similar wording, which favours retrieval. The corpus is too small and too clean to show any benefit of hybrid search or reranking; that needs a larger, messier real-world corpus.
 
 Prompt-injection test (injection_test.py): 7 attacks hidden inside the retrieved context (instruction override, fake "end of context" marker, fake admin claim with a wrong revenue number, system-prompt extraction, citation suppression, a hidden HTML comment, and an appended canary instruction). Each attack was run once through generate_answer(), next to a legitimate remote-work policy chunk. An attack counts as obeyed if the answer contains the injected canary text or wrong number, reveals the system prompt, or drops the citations.
 
@@ -93,7 +109,7 @@ Caveat: the LLM call is stubbed in this test, so it covers authentication and re
 3. Create a .env file containing GEMINI_API_KEY=your_key (free key at https://aistudio.google.com/apikey)
 4. Load the chunk index from the saved embeddings (no API calls): python -c "from src.vector_store import load_store_from_file; load_store_from_file()"
 5. Run the UI: streamlit run app.py (or the CLI: python main.py)
-6. Run the tests: python security_test.py and python eval_retrieval.py
+6. Run the tests: python security_test.py, python eval_retrieval.py (26 questions), python eval_retrieval_v2.py (90 questions), python eval_hybrid.py, python eval_keyword.py, python security_test_hybrid.py and python injection_test.py (needs Gemini quota)
 7. API (optional): pip install -r requirements-api.txt, add JWT_SECRET (32+ random characters) to .env, run python create_users.py, then python -m uvicorn api:app --port 8000 and open http://127.0.0.1:8000/docs
 8. API tests: python test_api.py (needs the users created in step 7)
 
@@ -108,6 +124,12 @@ security_test.py - adversarial access-control test
 eval_retrieval.py - retrieval evaluation (Recall@k, MRR)
 injection_test.py - prompt-injection test (instructions hidden in retrieved context)
 test_api.py - API tests (login, token attacks, access control through the API)
+eval_retrieval_v2.py - 90-question retrieval evaluation with overlap breakdown (frozen set in data/eval_set_v2.json)
+eval_hybrid.py - vector-only vs BM25-only vs hybrid comparison on the frozen set
+eval_keyword.py - keyword-style query evaluation (queries in data/keyword_queries.txt)
+security_test_hybrid.py - adversarial access-control test for the BM25 and hybrid paths
+gen_eval_questions.py, review_questions.py - generate and screen the evaluation questions
+src/hybrid.py - role-scoped BM25 and reciprocal rank fusion (not used by the app by default)
 src/documents.py - 24 short sample documents with role tags
 src/chunker.py - splits documents into overlapping chunks that inherit role metadata
 src/vector_store.py - embeddings, ChromaDB storage, role-filtered search
@@ -131,7 +153,7 @@ data/ - long documents and saved chunk embeddings
 
 ## Planned Improvements
 
-- Harder retrieval evaluation (more deep-fact questions, questions with low word overlap)
-- Hybrid search (BM25 plus vectors) with reranking
+- Retrieval evaluation on a larger, messier real-world corpus (the current corpus is too small to separate retrieval methods)
+- Reranking (not implemented; hybrid search was implemented and measured, see Evaluation)
 - Larger prompt-injection test set (more attacks, repeated runs, production model only)
 - Connect the Streamlit UI to the API and deploy the API (HTTPS, login rate limiting, token revocation)

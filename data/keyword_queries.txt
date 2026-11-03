@@ -1,0 +1,25 @@
+# role | query | doc id
+hr | 18 paid leaves casual sick | doc1
+hr | performance review June December | doc2
+hr | onboarding buddy 30 days | doc3
+hr | maternity leave 26 weeks | doc4
+hr | referral bonus 500 | doc5
+hr | notice period 60 days resignation | doc6
+engineering | production deployments Tuesday Thursday | doc7
+engineering | microservices message queue REST | doc8
+engineering | on-call allowance overtime | doc9
+engineering | pull request approval test coverage | doc10
+engineering | sev-1 acknowledge 15 minutes | doc11
+engineering | java spring boot kubernetes aws | doc12
+finance | Q3 revenue operating expenses | doc13
+finance | travel client meeting expenses reimbursement | doc14
+finance | vendor invoice payment terms | doc15
+finance | external audit March payroll tax filings | doc16
+finance | cash reserve 6 months operating expenses | doc17
+finance | salary disbursed last working day provident fund | doc18
+hr | floating holidays national holidays | doc19
+engineering | code of conduct report workplace concerns | doc20
+finance | remote work 2 days per week | doc21
+hr | two-factor authentication company-approved devices | doc22
+engineering | company mission values transparency ownership | doc23
+finance | offices Pune Bangalore | doc24

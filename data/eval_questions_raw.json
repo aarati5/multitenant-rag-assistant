@@ -1,0 +1,386 @@
+[
+  {
+    "doc_id": "doc1",
+    "question": "How far in advance must a staff member request planned personal time off through the HR system?"
+  },
+  {
+    "doc_id": "doc1",
+    "question": "What happens to any unused vacation days beyond the ten-day rollover limit at the end of December?"
+  },
+  {
+    "doc_id": "doc1",
+    "question": "If an employee is unwell for three or more consecutive working days, what documentation must they submit when returning?"
+  },
+  {
+    "doc_id": "doc1",
+    "question": "What are the specific annual allocations for personal matters versus medical absences granted to full-time staff?"
+  },
+  {
+    "doc_id": "doc2",
+    "question": "When during the bi-annual evaluation cycles must workers complete their self-evaluations online?"
+  },
+  {
+    "doc_id": "doc2",
+    "question": "How many days must a newly hired team member have been with the company before a review period begins to be included in formal scoring?"
+  },
+  {
+    "doc_id": "doc2",
+    "question": "How long after resuming work does an employee returning from parental or health-related leave have to complete their performance assessment?"
+  },
+  {
+    "doc_id": "doc2",
+    "question": "What score is assigned to an individual who consistently fulfills all requirements of their position?"
+  },
+  {
+    "doc_id": "doc3",
+    "question": "What specific activities are scheduled for the second day of a new employee's orientation program?"
+  },
+  {
+    "doc_id": "doc3",
+    "question": "Within what timeframe must management assign a new peer guide if the original buddy goes on extended leave?"
+  },
+  {
+    "doc_id": "doc3",
+    "question": "For how many days is an onboarding peer partner assigned to assist a newly joined worker?"
+  },
+  {
+    "doc_id": "doc3",
+    "question": "What onboarding requirements are mandatory for former staff members who return to the company within one year?"
+  },
+  {
+    "doc_id": "doc4",
+    "question": "How many weeks prior to the anticipated week of birth must an employee formally notify HR and their manager in writing?"
+  },
+  {
+    "doc_id": "doc4",
+    "question": "What happens to the start date of parental leave if a baby is born ahead of the planned start date?"
+  },
+  {
+    "doc_id": "doc4",
+    "question": "How long after a child is born must a father or non-birthing parent finish taking their paternity time off?"
+  },
+  {
+    "doc_id": "doc4",
+    "question": "How far prior to the projected delivery date is a pregnant worker permitted to begin maternity leave?"
+  },
+  {
+    "doc_id": "doc5",
+    "question": "How long must a recommended candidate work at the organization before the referring team member receives their financial reward?"
+  },
+  {
+    "doc_id": "doc5",
+    "question": "Prior to what action must an employee submit a job candidate's details into the internal system to remain eligible for a referral payout?"
+  },
+  {
+    "doc_id": "doc5",
+    "question": "Which job applicants are disqualified from earning a referral incentive due to their previous interactions with the firm?"
+  },
+  {
+    "doc_id": "doc5",
+    "question": "Why are direct supervisors precluded from receiving incentive payouts for candidates they recommend?"
+  },
+  {
+    "doc_id": "doc6",
+    "question": "When does the mandatory sixty-day transition timeframe officially start after a worker submits their resignation letter?"
+  },
+  {
+    "doc_id": "doc6",
+    "question": "By what deadline must a manager sign off on a departing team member's handover documentation?"
+  },
+  {
+    "doc_id": "doc6",
+    "question": "During which specific part of the notice period is the HR exit conversation conducted?"
+  },
+  {
+    "doc_id": "doc6",
+    "question": "What dual approvals are required for a resigning worker to obtain an early release from the standard notice duration?"
+  },
+  {
+    "doc_id": "doc7",
+    "question": "What is the morning cutoff time for main-branch updates to be included in that day's production rollout?"
+  },
+  {
+    "doc_id": "doc7",
+    "question": "How long must authors and reliability staff track system health metrics after a software release finishes?"
+  },
+  {
+    "doc_id": "doc7",
+    "question": "What happens to scheduled software deployments when a release date coincides with an official company holiday?"
+  },
+  {
+    "doc_id": "doc7",
+    "question": "Under what circumstances can a developer skip automated unit testing or peer evaluation prior to merging code?"
+  },
+  {
+    "doc_id": "doc8",
+    "question": "What is the maximum allowed duration for default REST connection timeouts between microservices?"
+  },
+  {
+    "doc_id": "doc8",
+    "question": "Which legacy software components are temporarily excused from being divided into microservices?"
+  },
+  {
+    "doc_id": "doc8",
+    "question": "Which internal committee must receive a variance application when a technical team needs to bypass standard backend communication protocols?"
+  },
+  {
+    "doc_id": "doc8",
+    "question": "What prerequisite entries must a team make in official system registries before launching a newly developed microservice?"
+  },
+  {
+    "doc_id": "doc9",
+    "question": "At what specific time and day does an engineer's weekly support shift officially begin and end?"
+  },
+  {
+    "doc_id": "doc9",
+    "question": "How quickly must a retrospective analysis be started following the resolution of a production issue?"
+  },
+  {
+    "doc_id": "doc9",
+    "question": "How much advance notice is required when requesting a trade of on-call coverage for scheduled personal events?"
+  },
+  {
+    "doc_id": "doc9",
+    "question": "Where and when should engineers record extra hours worked while responding to off-hours production emergencies?"
+  },
+  {
+    "doc_id": "doc10",
+    "question": "What specific security risks should reviewers look for when evaluating submitted code?"
+  },
+  {
+    "doc_id": "doc10",
+    "question": "How is the mandatory pull request evaluation conducted during an urgent production outage?"
+  },
+  {
+    "doc_id": "doc10",
+    "question": "What elements are evaluated to ensure a code submission aligns with organizational coding formatting standards?"
+  },
+  {
+    "doc_id": "doc10",
+    "question": "What distinct testing levels must be present in a pull request to confirm functionality and prevent feature regressions?"
+  },
+  {
+    "doc_id": "doc11",
+    "question": "Who gets notified automatically if a primary responder fails to acknowledge a critical system alert within fifteen minutes?"
+  },
+  {
+    "doc_id": "doc11",
+    "question": "Which executive has the authority to grant a written extension for completing an incident postmortem report?"
+  },
+  {
+    "doc_id": "doc11",
+    "question": "Within what timeframe following service restoration must an engineering team deliver their final post-incident analysis document?"
+  },
+  {
+    "doc_id": "doc11",
+    "question": "What temporary report is required within the normal timeframe even when a postmortem delay has been formally approved?"
+  },
+  {
+    "doc_id": "doc12",
+    "question": "How far in advance of project work must a lead engineer submit a variance request for non-standard software components?"
+  },
+  {
+    "doc_id": "doc12",
+    "question": "What built-in capabilities are included out of the box in the official Java starter project template?"
+  },
+  {
+    "doc_id": "doc12",
+    "question": "Under what technical conditions is using Python acceptable for a new service?"
+  },
+  {
+    "doc_id": "doc12",
+    "question": "What packaging mechanism must teams use to deploy containerized applications onto Kubernetes clusters?"
+  },
+  {
+    "doc_id": "doc13",
+    "question": "Within what timeframe must managers complete their monthly budget reviews against ledger allocations at the beginning of each month?"
+  },
+  {
+    "doc_id": "doc13",
+    "question": "What documentation is required when submitting purchasing requests that exceed five thousand dollars?"
+  },
+  {
+    "doc_id": "doc13",
+    "question": "What is the maximum unapproved expenditure allowed for urgent server failures, and how quickly must invoices be turned in afterwards?"
+  },
+  {
+    "doc_id": "doc13",
+    "question": "Who holds the authority to directly authorize spending linked to an active revenue-generating customer agreement outside the standard purchase process?"
+  },
+  {
+    "doc_id": "doc14",
+    "question": "By when must employees submit their monthly expense summary in the financial system?"
+  },
+  {
+    "doc_id": "doc14",
+    "question": "If internet connectivity is completely unavailable during a trip emergency, how long does a staff member have after returning to get manager approval for expenses over $500?"
+  },
+  {
+    "doc_id": "doc14",
+    "question": "Which everyday travel costs are explicitly forbidden from being claimed under the business reimbursement policy?"
+  },
+  {
+    "doc_id": "doc14",
+    "question": "Where in the company financial portal should team members navigate to submit itemized receipts for travel spending?"
+  },
+  {
+    "doc_id": "doc15",
+    "question": "What specific checks does the finance department perform when reviewing a newly submitted vendor bill?"
+  },
+  {
+    "doc_id": "doc15",
+    "question": "What happens to the standard payment timeline if a supplier bill contains inaccurate charges or unfulfilled services?"
+  },
+  {
+    "doc_id": "doc15",
+    "question": "What paperwork must be on file before accounts payable can process payments for a newly contracted supplier?"
+  },
+  {
+    "doc_id": "doc15",
+    "question": "What does a department manager's authorization confirm regarding an incoming vendor bill?"
+  },
+  {
+    "doc_id": "doc16",
+    "question": "How quickly are staff expected to supply documentation or system permissions when requested by external auditors in March?"
+  },
+  {
+    "doc_id": "doc16",
+    "question": "What task must the accounting team undertake during the month of January in preparation for the annual review?"
+  },
+  {
+    "doc_id": "doc16",
+    "question": "Who has the authority to approve a temporary delay in the annual financial audit during major system outages or natural catastrophes?"
+  },
+  {
+    "doc_id": "doc16",
+    "question": "What verification steps take place in February prior to the external audit team's arrival?"
+  },
+  {
+    "doc_id": "doc17",
+    "question": "If liquid reserves dip below the mandatory benchmark, how many calendar days does the company have to execute a recovery strategy?"
+  },
+  {
+    "doc_id": "doc17",
+    "question": "Which recurring company costs are incorporated when determining the trailing twelve-month baseline for liquid reserves?"
+  },
+  {
+    "doc_id": "doc17",
+    "question": "What dual executive authorizations are required if the business must draw funds from the emergency cushion below its mandatory baseline?"
+  },
+  {
+    "doc_id": "doc17",
+    "question": "How quickly must the Chief Financial Officer report a liquid reserve shortage to the Chief Executive Officer?"
+  },
+  {
+    "doc_id": "doc18",
+    "question": "What is the monthly deadline for staff members to modify their direct deposit banking details in the system portal?"
+  },
+  {
+    "doc_id": "doc18",
+    "question": "When does the automated software run the initial payroll calculations prior to monthly disbursement?"
+  },
+  {
+    "doc_id": "doc18",
+    "question": "If the final calendar day of a month falls on a Sunday, when are employee payments distributed?"
+  },
+  {
+    "doc_id": "doc18",
+    "question": "Which department handles final payment calculations for employees who are leaving the organization?"
+  },
+  {
+    "doc_id": "doc19",
+    "question": "How many weeks in advance must an employee submit their flexible day-off application through the HR system?"
+  },
+  {
+    "doc_id": "doc19",
+    "question": "Under what specific condition are personal floating days permitted to carry over to the subsequent calendar year?"
+  },
+  {
+    "doc_id": "doc19",
+    "question": "Which setting in an employee's inbox needs to be configured right before taking a floating day off?"
+  },
+  {
+    "doc_id": "doc19",
+    "question": "How is the flexible holiday allowance determined for staff members who join the company mid-year?"
+  },
+  {
+    "doc_id": "doc20",
+    "question": "What specific details should a staff member record when initially documenting a workplace incident?"
+  },
+  {
+    "doc_id": "doc20",
+    "question": "What step should a worker take if the workplace issue they need to report involves their direct supervisor?"
+  },
+  {
+    "doc_id": "doc20",
+    "question": "What is an employee expected to do after submitting a complaint when management or HR conducts subsequent reviews?"
+  },
+  {
+    "doc_id": "doc20",
+    "question": "According to workplace diversity standards, how should staff members handle participation during group meetings?"
+  },
+  {
+    "doc_id": "doc21",
+    "question": "How many weeks prior to desired off-site dates must a formal remote request be submitted?"
+  },
+  {
+    "doc_id": "doc21",
+    "question": "What operational events allow a supervisor to temporarily suspend off-site work and demand in-office presence?"
+  },
+  {
+    "doc_id": "doc21",
+    "question": "Through which department must extended medical work arrangements be handled?"
+  },
+  {
+    "doc_id": "doc21",
+    "question": "If a worker requests to work off-site on a day with an obligatory team workshop, how is the request handled?"
+  },
+  {
+    "doc_id": "doc22",
+    "question": "Which two entities must formally approve a temporary exemption for using non-standard hardware?"
+  },
+  {
+    "doc_id": "doc22",
+    "question": "Under what specific circumstances must employees complete multi-factor verification steps while accessing company platforms?"
+  },
+  {
+    "doc_id": "doc22",
+    "question": "Besides personal phones and laptops, what specific type of external hardware is forbidden from connecting to company workstations?"
+  },
+  {
+    "doc_id": "doc22",
+    "question": "If a worker does not utilize the standard reporting extension, how should they transmit a suspicious email to security?"
+  },
+  {
+    "doc_id": "doc23",
+    "question": "What three mandatory checks must software undergo before being deployed into production?"
+  },
+  {
+    "doc_id": "doc23",
+    "question": "What type of report must a team publish following a service outage to maintain operational openness?"
+  },
+  {
+    "doc_id": "doc23",
+    "question": "What type of software fix is permitted to skip regular review workflows during severe system downtime?"
+  },
+  {
+    "doc_id": "doc23",
+    "question": "When a developer detects a security vulnerability during a peer review, what action should they take regarding the software deployment?"
+  },
+  {
+    "doc_id": "doc24",
+    "question": "How far ahead must workers assigned to the Pune office reserve their workstation using the reservation platform?"
+  },
+  {
+    "doc_id": "doc24",
+    "question": "Between what specific hours of the day must remote developers remain accessible on communication tools?"
+  },
+  {
+    "doc_id": "doc24",
+    "question": "Which two authorities must provide written consent for a non-technical staff member to work off-site temporarily during a family emergency?"
+  },
+  {
+    "doc_id": "doc24",
+    "question": "What approval is necessary for an engineering employee to work from a location outside of Indian borders?"
+  }
+]
