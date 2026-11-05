@@ -165,6 +165,7 @@ data/ - long documents and saved chunk embeddings
 - Chunk embeddings are precomputed and loaded from a JSON file at startup; production would embed incrementally into a managed vector database.
 - The demo shares one API key and its free quota across all visitors.
 - Prompt-injection testing is a small smoke test (7 attacks, one run each, two models). A poisoned document inside a permitted role's scope can still influence answers.
+- The code uses the google-generativeai SDK, which Google has deprecated (it prints a FutureWarning on import). It still works today; migrating to the google-genai SDK is pending.
 
 ## Planned Improvements
 
