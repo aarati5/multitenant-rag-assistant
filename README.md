@@ -2,6 +2,12 @@
 
 Live demo: https://permission-aware-rag.streamlit.app
 
+
+
+https://github.com/user-attachments/assets/ee3121a3-7e10-4142-bd31-b3bb72584d9e
+
+
+
 A Retrieval-Augmented Generation system that enforces role-based access control inside the vector database query, so users can only retrieve and receive answers from documents their role permits, with an audit trail of every query.
 
 ## Demo: same question, different role
