@@ -18,6 +18,21 @@ Role: finance, same question (finance documents retrieved, answer cites chunk do
 
 Standard RAG systems retrieve the most semantically relevant chunks regardless of who is asking. In an enterprise setting with mixed HR, Engineering and Finance data, this creates a data leakage risk. This system applies the role filter inside the ChromaDB query itself, so restricted documents are never returned to the application or the LLM.
 
+## Architecture
+
+```mermaid
+flowchart LR
+    subgraph IN["Two entry points"]
+        S["Streamlit demo: role picked in the UI"]
+        J["FastAPI: login returns a signed JWT, role comes from the token"]
+    end
+    S --> R["Role of the caller"]
+    J --> R
+    R --> V["ChromaDB similarity search with role filter (caller's role or all)"]
+    V --> L["LLM answers only from permitted chunks and cites chunk IDs"]
+    V --> A["Audit log: user, role, query, chunk IDs"]
+```
+
 ## How It Works
 
 1. 24 documents (400-600 words each) are split into 112 overlapping chunks (150 words, 30-word overlap); every chunk inherits its document's role metadata (hr, engineering, finance, or all)
